@@ -1,0 +1,26 @@
+// function init() {
+//     console.log("here");
+    // response.addHeader("Access-Control-Allow-Origin", "*");
+    
+    // fetch("https://iot.martinintw.com/api/v1/data/12345617", {'mode': 'no-cors'}).then(function(response) {
+    //   return response.json();
+    // }).then(function(myJson) {
+    //   myJson.addHeader("Access-Control-Allow-Origin", "*");
+    //   console.log(myJson);
+    // });
+    // console.log(data);
+// }
+// $.ajax({
+//     url: 'https://iot.martinintw.com/api/v1/data/12345617',
+//     type: 'GET',
+//     dataType: "json",
+//     mode: 'no-cors'
+// });
+// $.getJSON('https://iot.martinintw.com/api/v1/data/12345617', function(data){
+//         $('#output').html(data.contents);
+//         console.log(data);
+//     });
+
+// window.onload = function () {
+//     init();
+// };
