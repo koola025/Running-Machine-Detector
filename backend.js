@@ -1,6 +1,6 @@
 
 /*
- * 取得現在日期時間
+ * 取得現在日期時間 * * * * * * * * * * * * * * * * * * * *
  */
 var today = new Date();
 var dd = today.getDate();
@@ -20,14 +20,17 @@ today = mm + '/' + dd + '/' + yyyy;
 
 
 
+
+
 /*
- * 讀取MQTT取資料 (記得先裝chrome擴充)
+ * 讀取MQTT取資料 (記得先裝chrome擴充) * * * * * * * * * * * * 
  * 使用 p5.js
  * https://p5js.org/examples/
  */
-let data = {} ; 
+let data = {} ; // 讀回來的JSON object
 
-let day = {};
+// 讀回來的所有資料的日期、時間、小時
+let day = {}; 
 let time = {};
 let hour = {};
 function setup() {
@@ -38,11 +41,11 @@ function setup() {
 
 
 /*
- * Parse JSON
+ * 作圖：每日用量 * * * * * * * * * * * * * * * * * * * * * * 
  */
-// let dataArray = [];
-
-
+let count = 1;
+let old_data;
+let new_data;
 function makeUsagePerDay(data) {
   if (data.length > 0) new_data = getCreatedTime(data, 0);
 	for(i = 1; i < data.length; i++)
@@ -70,8 +73,12 @@ function makeUsagePerDay(data) {
       addData(massPopChart, old_js_time, count);
       count = 1;
     }
+  }
 }
   
+/*
+ * 作圖：小時統計 * * * * * * * * * * * * * * * * * * * * * * 
+ */
 function hourStats(data){
   var count = []; 
 
@@ -116,38 +123,25 @@ function hourStats(data){
 }
 
 
-let count = 1;
-let old_data;
-let new_data;
+/*
+ * Parse JSON * * * * * * * * * * * * * * * * * * * * * * 
+ */
 function parseData(data){
   console.log(data)
-  
   for(i = 0; i < data.length; i++)
 	{
     created_at = getCreatedTime(data,i);
-    console.log (created_at);
     day[i] = created_at.split(" ")[0];
     time[i] = created_at.split(" ")[1];
-    // dataArray.push(created_at);
-    addData(massPopChart, created_at, 1);
-    
   }
-  // console.log (dataArray);
   hourStats(data);
   
   
-  makeUsagePerDay(data);
-    // if (i < 5) console.log (year + "/" + month + "/" + day);
-  }
-  // console.log (dataArray);
-
 }
 
 
-
-
 /*
- * Parse 時間
+ * Parse created_at * * * * * * * * * * * * * * * * * * *
  */
 function getCreatedTime(data,num)
 {
@@ -156,7 +150,7 @@ function getCreatedTime(data,num)
 
 
 /*
- * 加一筆資料到圖表中
+ * 加一筆資料到圖表中 (會設成藍色) * * * * * * * * * * * * * * 
  */
 function addData(chart, label, data) {
   chart.data.labels.push(label);
@@ -170,8 +164,9 @@ function addData(chart, label, data) {
 }
 
 
+
 /* 
- * 圖表相關
+ * 圖表相關 * * * * * * * * * * * * * * * * * * * * * * * *
  * 使用 chart.js
  * https://www.chartjs.org/docs/latest/charts/
  */
@@ -180,10 +175,7 @@ function addData(chart, label, data) {
 let hourChart = document.getElementById('hour').getContext('2d');
 let usagePerDay = document.getElementById('chart').getContext('2d');
 
-
-
-//圖表的全域變數
-
+// 定義顏色
 window.chartColors = {
 	red: 'rgb(255, 99, 132)',
 	orange: 'rgb(255, 159, 64)',
@@ -195,16 +187,13 @@ window.chartColors = {
 	grey: 'rgb(201, 203, 207)'
 };
 
+// 圖表的全域變數
 Chart.defaults.global.defaultFontFamily = 'Lato';
 Chart.defaults.global.defaultFontSize = 18;
 Chart.defaults.global.defaultFontColor = '#777';
 
 
-
-
-
-
-//圖表Object
+// 圖表Object: 每天用量
 let massPopChart = new Chart(usagePerDay, {
   type:'line', //換後面這些就會出現不同的圖： bar, horizontalBar, pie, line, doughnut, radar, polarArea
   data:{
@@ -279,7 +268,8 @@ let massPopChart = new Chart(usagePerDay, {
   }
 
 });
-// 07 ~ 22
+
+// 圖表Object: 小時累計 (07 ~ 22)
 let hourStatsChart = new Chart(hourChart, {
   type:'bar', //換後面這些就會出現不同的圖： bar, horizontalBar, pie, line, doughnut, radar, polarArea
   data:{
