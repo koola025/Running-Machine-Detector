@@ -26,6 +26,7 @@ today = mm + '/' + dd + '/' + yyyy;
  * https://p5js.org/examples/
  */
 let data = {} ; 
+
 let day = {};
 let time = {};
 let hour = {};
@@ -35,41 +36,43 @@ function setup() {
 }
 
 
+
 /*
  * Parse JSON
  */
 // let dataArray = [];
-function parseData(data){
-	for(i = 0; i < data.length; i++)
+
+
+function makeUsagePerDay(data) {
+  if (data.length > 0) new_data = getCreatedTime(data, 0);
+	for(i = 1; i < data.length; i++)
 	{
-    created_at = getCreatedTime(data,i);
-    console.log (created_at);
-    day[i] = created_at.split(" ")[0];
-    time[i] = created_at.split(" ")[1];
-    // dataArray.push(created_at);
-    addData(massPopChart, created_at, 1);
-    
-  }
-  // console.log (dataArray);
-  hourStats(data);
+    old_data = new_data;
+    new_data = getCreatedTime(data, i);
+
+    old_moment = moment(old_data, "YYYY-MM-DD hh:mm:ss");
+    new_moment = moment(new_data, "YYYY-MM-DD hh:mm:ss");
+
+    old_js_time = old_moment.toDate();
+    old_day = old_js_time.getDate();
+    old_month = old_js_time.getMonth() + 1;
+    old_year = old_js_time.getFullYear();
+
+    new_js_time = new_moment.toDate();
+    new_day = new_js_time.getDate();
+    new_month = new_js_time.getMonth() + 1;
+    new_year = new_js_time.getFullYear();
+
+    if (old_day == new_day && old_month == new_month && old_year == new_year) {
+      count++;
+    }
+    else {
+      addData(massPopChart, old_js_time, count);
+      count = 1;
+    }
 }
-
+  
 function hourStats(data){
-  // var i;
-  // for(i = 7; i <= 22; i++){
-  //   hourStatsChart.data.labels.push(i);
-  //   hourStatsChart.data.datasets.forEach((dataset) => {
-  //     dataset.data.push(0);
-  //   });
-  // }
-
-  // for(i = 0; i < time.length; i++){
-  //   hour[i] = time[i].split(":")[0];
-  //   console.log(hour[i]);
-  //   hourStatsChart.data.datasets[0].data[hour[i]-7] += 1;
-  // }
-  // hourStatsChart.update();
-
   var count = []; 
 
   count[7] = 0;
@@ -100,32 +103,7 @@ function hourStats(data){
       count[9] ++;
     else count[hour[i]]++;
 
-		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '0')
-		// 	count[10] ++;
-		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '1')
-		// 	count[11] ++;
-		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '2')
-		// 	count[12] ++;
-		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '3')
-		// 	count[13] ++;
-		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '4')
-		// 	count[14] ++;
-		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '5')
-		// 	count[15] ++;
-		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '6')
-		// 	count[16] ++;
-		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '7')
-		// 	count[17] ++;
-		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '8')
-		// 	count[18] ++;
-		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '9')
-		// 	count[19] ++;
-		// else if(data[i].created_at[11] == '2' &&  data[i].created_at[12] == '0')
-		// 	count[20] ++;
-		// else if(data[i].created_at[11] == '2' &&  data[i].created_at[12] == '1')
-		// 	count[21] ++;
-		// else if(data[i].created_at[11] == '2' &&  data[i].created_at[12] == '2')
-		// 	count[22] ++;
+		
 		
   }
   
@@ -133,24 +111,40 @@ function hourStats(data){
     addData(hourStatsChart,i, count[i]*100/data.length);
   }
   
-	//  addData(hourStatsChart,"07", count[7]*100/data.length);
-	//  addData(hourStatsChart,"08", count[8]*100/data.length);
-	//  addData(hourStatsChart,"09", count[9]*100/data.length);
-	//  addData(hourStatsChart,"10", count[10]*100/data.length);
-	//  addData(hourStatsChart,"11", count[11]*100/data.length);
-	//  addData(hourStatsChart,"12", count[12]*100/data.length);
-	//  addData(hourStatsChart,"13", count[13]*100/data.length);
-	//  addData(hourStatsChart,"14", count[14]*100/data.length);
-	//  addData(hourStatsChart,"15", count[15]*100/data.length);
-	//  addData(hourStatsChart,"16", count[16]*100/data.length);
-	//  addData(hourStatsChart,"17", count[17]*100/data.length);
-	//  addData(hourStatsChart,"18", count[18]*100/data.length);
-	//  addData(hourStatsChart,"19", count[19]*100/data.length);
-	//  addData(hourStatsChart,"20", count[20]*100/data.length);
-	//  addData(hourStatsChart,"21", count[21]*100/data.length);
-  //  addData(hourStatsChart,"22", count[22]*100/data.length);
+	
   
 }
+
+
+let count = 1;
+let old_data;
+let new_data;
+function parseData(data){
+  console.log(data)
+  
+  for(i = 0; i < data.length; i++)
+	{
+    created_at = getCreatedTime(data,i);
+    console.log (created_at);
+    day[i] = created_at.split(" ")[0];
+    time[i] = created_at.split(" ")[1];
+    // dataArray.push(created_at);
+    addData(massPopChart, created_at, 1);
+    
+  }
+  // console.log (dataArray);
+  hourStats(data);
+  
+  
+  makeUsagePerDay(data);
+    // if (i < 5) console.log (year + "/" + month + "/" + day);
+  }
+  // console.log (dataArray);
+
+}
+
+
+
 
 /*
  * Parse 時間
@@ -168,37 +162,64 @@ function addData(chart, label, data) {
   chart.data.labels.push(label);
   chart.data.datasets.forEach((dataset) => {
       dataset.data.push(data);
+
+      dataset.backgroundColor= window.chartColors.lightBlue;
+      dataset.borderColor = window.chartColors.blue;
   });
   chart.update();
 }
 
 
 /* 
- * 範例圖表
+ * 圖表相關
  * 使用 chart.js
  * https://www.chartjs.org/docs/latest/charts/
  */
-let myChart = document.getElementById('chart').getContext('2d');
+
+
 let hourChart = document.getElementById('hour').getContext('2d');
+let usagePerDay = document.getElementById('chart').getContext('2d');
+
 
 
 //圖表的全域變數
+
+window.chartColors = {
+	red: 'rgb(255, 99, 132)',
+	orange: 'rgb(255, 159, 64)',
+	yellow: 'rgb(255, 205, 86)',
+	green: 'rgb(75, 192, 192)',
+  blue: 'rgb(54, 162, 235)',
+  lightBlue: 'rgba(54, 162, 235, 0.6)',
+	purple: 'rgb(153, 102, 255)',
+	grey: 'rgb(201, 203, 207)'
+};
+
 Chart.defaults.global.defaultFontFamily = 'Lato';
 Chart.defaults.global.defaultFontSize = 18;
 Chart.defaults.global.defaultFontColor = '#777';
 
 
+
+
+
+
 //圖表Object
-let massPopChart = new Chart(myChart, {
-  type:'bar', //換後面這些就會出現不同的圖： bar, horizontalBar, pie, line, doughnut, radar, polarArea
+let massPopChart = new Chart(usagePerDay, {
+  type:'line', //換後面這些就會出現不同的圖： bar, horizontalBar, pie, line, doughnut, radar, polarArea
   data:{
     labels: [],
     datasets:[{
-      label:'Population',
+      label:'Count',
+      // fill: false,
+      pointBackgroundColor: window.chartColors.blue,
+      backgroundColor: window.chartColors.yellow,
+      borderColor: window.chartColors.blue,
+      // steppedLine: true,
       data:[
         
       ],
-      //backgroundColor:'green',      //可自訂背景顏色
+      // backgroundColor:'rgba(255, 99, 132, 0.6)',      // 可自訂背景顏色
       backgroundColor:[
         // 'rgba(255, 99, 132, 0.6)',
         // 'rgba(54, 162, 235, 0.6)',
@@ -214,10 +235,11 @@ let massPopChart = new Chart(myChart, {
       hoverBorderColor:'#000'
     }]
   },
+  fill: false,
   options:{
     title:{
       display:true,
-      text:'Largest Cities In Massachusetts',
+      text:'Usage Per Day',
       fontSize:25
     },
     legend:{
@@ -237,8 +259,25 @@ let massPopChart = new Chart(myChart, {
     },
     tooltips:{
       enabled:true
+    },
+    scales: {
+      xAxes: [{
+          type: 'time',
+          time: {
+              displayFormats: {'day': 'YYYY/MM/DD'},
+              tooltipFormat: 'YYYY/MM/DD',
+              unit: 'day',
+              // round: 'true'
+          }
+      }]
+    },
+    elements: {
+      line: {
+          tension: 0, // disables bezier curves
+      }
     }
   }
+
 });
 // 07 ~ 22
 let hourStatsChart = new Chart(hourChart, {
@@ -291,4 +330,5 @@ let hourStatsChart = new Chart(hourChart, {
       enabled:true
     }
   }
+
 });
