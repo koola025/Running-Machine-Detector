@@ -1,4 +1,75 @@
 
+/*
+ * 取得現在日期時間
+ */
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth() + 1;      // January is 0!
+var yyyy = today.getFullYear();
+
+if(dd<10) {
+    dd = '0'+dd
+} 
+
+if(mm<10) {
+    mm = '0'+mm
+} 
+
+today = mm + '/' + dd + '/' + yyyy;
+// document.write(today);
+
+
+
+/*
+ * 讀取MQTT取資料 (記得先裝chrome擴充)
+ * 使用 p5.js
+ * https://p5js.org/examples/
+ */
+let data = {} ; 
+function setup() {
+    //讀取跑步機sensor的所有資料並呼叫 parseData(data)
+    data = loadJSON("https://iot.martinintw.com/api/v1/data/12345614",parseData);
+}
+
+
+/*
+ * Parse JSON
+ */
+// let dataArray = [];
+function parseData(data){
+	for(i = 0; i < data.length; i++)
+	{
+    created_at = getCreatedTime(data,i);
+    console.log (created_at);
+    // dataArray.push(created_at);
+    addData(massPopChart, created_at, 1);
+    
+  }
+  // console.log (dataArray);
+}
+
+
+/*
+ * Parse 時間
+ */
+function getCreatedTime(data,num)
+{
+  return data[num].created_at;
+}
+
+
+/*
+ * 加一筆資料到圖表中
+ */
+function addData(chart, label, data) {
+  chart.data.labels.push(label);
+  chart.data.datasets.forEach((dataset) => {
+      dataset.data.push(data);
+  });
+  chart.update();
+}
+
+
 /* 
  * 範例圖表
  * 使用 chart.js
@@ -17,26 +88,21 @@ Chart.defaults.global.defaultFontColor = '#777';
 let massPopChart = new Chart(myChart, {
   type:'bar', //換後面這些就會出現不同的圖： bar, horizontalBar, pie, line, doughnut, radar, polarArea
   data:{
-    labels:['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
+    labels: [],
     datasets:[{
       label:'Population',
       data:[
-        617594,
-        181045,
-        153060,
-        106519,
-        105162,
-        95072
+        
       ],
       //backgroundColor:'green',      //可自訂背景顏色
       backgroundColor:[
-        'rgba(255, 99, 132, 0.6)',
-        'rgba(54, 162, 235, 0.6)',
-        'rgba(255, 206, 86, 0.6)',
-        'rgba(75, 192, 192, 0.6)',
-        'rgba(153, 102, 255, 0.6)',
-        'rgba(255, 159, 64, 0.6)',
-        'rgba(255, 99, 132, 0.6)'
+        // 'rgba(255, 99, 132, 0.6)',
+        // 'rgba(54, 162, 235, 0.6)',
+        // 'rgba(255, 206, 86, 0.6)',
+        // 'rgba(75, 192, 192, 0.6)',
+        // 'rgba(153, 102, 255, 0.6)',
+        // 'rgba(255, 159, 64, 0.6)',
+        // 'rgba(255, 99, 132, 0.6)'
       ],
       borderWidth:1,
       borderColor:'#777',
@@ -70,41 +136,3 @@ let massPopChart = new Chart(myChart, {
     }
   }
 });
-
-
-
-
-/*
- * 讀取MQTT取資料 (記得先裝chrome擴充)
- * 使用 p5.js
- * https://p5js.org/examples/
- */
-let data = {} ; 
-function setup() {
-    data = loadJSON("https://iot.martinintw.com/api/v1/data/12345614",parseData);
-    //目前讀完只有顯示在console，待parse並放到圖中
-    //console.log(data);
-	
-	
-}
-function parseData(data){
-	//console.log(data[0].created_at);
-	//console.log(data.length);
-	for(i = 0; i < data.length; i++)
-	{
-		getCreatedTime(data,i);
-	}
-	
-}
-
-function getCreatedTime(data,num)
-{
-	created_at = data[num].created_at;
-	console.log(created_at);
-}
-
-
-
-
-
-
