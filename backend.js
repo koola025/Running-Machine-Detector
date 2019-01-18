@@ -27,23 +27,23 @@ today = mm + '/' + dd + '/' + yyyy;
  */
 let data = {} ; 
 
+let day = {};
+let time = {};
+let hour = {};
 function setup() {
     //讀取跑步機sensor的所有資料並呼叫 parseData(data)
     data = loadJSON("https://iot.martinintw.com/api/v1/data/12345614",parseData);
-    console.log(data);
+}
 
-  }
 
 
 /*
  * Parse JSON
  */
 // let dataArray = [];
-let count = 1;
-let old_data;
-let new_data;
-function parseData(data){
-  console.log(data)
+
+
+function makeUsagePerDay(data) {
   if (data.length > 0) new_data = getCreatedTime(data, 0);
 	for(i = 1; i < data.length; i++)
 	{
@@ -70,12 +70,80 @@ function parseData(data){
       addData(massPopChart, old_js_time, count);
       count = 1;
     }
+}
+  
+function hourStats(data){
+  var count = []; 
 
+  count[7] = 0;
+	count[8] = 0;
+	count[9] = 0;
+	count[10] = 0;
+	count[11] = 0;
+	count[12] = 0;
+	count[13] = 0;
+	count[14] = 0;
+	count[15] = 0;
+	count[16] = 0;
+	count[17] = 0;
+	count[18] = 0;
+	count[19] = 0;
+	count[20] = 0;
+	count[21] = 0;
+	count[22] = 0;
+	for(i = 0; i < data.length; i++)
+	{
+    hour[i] = time[i].split(":")[0];
+
+		if(hour[i] == "07")
+			count[7] ++;
+		else if(hour[i] == "08")
+			count[8] ++;
+		else if(hour[i] == "09")
+      count[9] ++;
+    else count[hour[i]]++;
+
+		
+		
+  }
+  
+  for(i=7;i<=22;i++){
+    addData(hourStatsChart,i, count[i]*100/data.length);
+  }
+  
+	
+  
+}
+
+
+let count = 1;
+let old_data;
+let new_data;
+function parseData(data){
+  console.log(data)
+  
+  for(i = 0; i < data.length; i++)
+	{
+    created_at = getCreatedTime(data,i);
+    console.log (created_at);
+    day[i] = created_at.split(" ")[0];
+    time[i] = created_at.split(" ")[1];
+    // dataArray.push(created_at);
+    addData(massPopChart, created_at, 1);
+    
+  }
+  // console.log (dataArray);
+  hourStats(data);
+  
+  
+  makeUsagePerDay(data);
     // if (i < 5) console.log (year + "/" + month + "/" + day);
   }
   // console.log (dataArray);
 
 }
+
+
 
 
 /*
@@ -94,10 +162,10 @@ function addData(chart, label, data) {
   chart.data.labels.push(label);
   chart.data.datasets.forEach((dataset) => {
       dataset.data.push(data);
+
       dataset.backgroundColor= window.chartColors.lightBlue;
       dataset.borderColor = window.chartColors.blue;
   });
-
   chart.update();
 }
 
@@ -109,8 +177,9 @@ function addData(chart, label, data) {
  */
 
 
-
+let hourChart = document.getElementById('hour').getContext('2d');
 let usagePerDay = document.getElementById('chart').getContext('2d');
+
 
 
 //圖表的全域變數
@@ -208,4 +277,58 @@ let massPopChart = new Chart(usagePerDay, {
       }
     }
   }
+
+});
+// 07 ~ 22
+let hourStatsChart = new Chart(hourChart, {
+  type:'bar', //換後面這些就會出現不同的圖： bar, horizontalBar, pie, line, doughnut, radar, polarArea
+  data:{
+    labels: [],
+    datasets:[{
+      label:'使用率(%)',
+      data:[
+        
+      ],
+      //backgroundColor:'green',      //可自訂背景顏色
+      backgroundColor:[
+        // 'rgba(255, 99, 132, 0.6)',
+        // 'rgba(54, 162, 235, 0.6)',
+        // 'rgba(255, 206, 86, 0.6)',
+        // 'rgba(75, 192, 192, 0.6)',
+        // 'rgba(153, 102, 255, 0.6)',
+        // 'rgba(255, 159, 64, 0.6)',
+        // 'rgba(255, 99, 132, 0.6)'
+      ],
+      borderWidth:1,
+      borderColor:'#777',
+      hoverBorderWidth:3,
+      hoverBorderColor:'#000'
+    }]
+  },
+  options:{
+    title:{
+      display:true,
+      text:'尖峰時段預測',
+      fontSize:25
+    },
+    legend:{
+      display:true,
+      position:'right',
+      labels:{
+        fontColor:'#000'
+      }
+    },
+    layout:{
+      padding:{
+        left:50,
+        right:0,
+        bottom:0,
+        top:0
+      }
+    },
+    tooltips:{
+      enabled:true
+    }
+  }
+
 });
