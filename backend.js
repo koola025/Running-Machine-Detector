@@ -127,7 +127,8 @@ function hourStats(data){
  * Parse JSON * * * * * * * * * * * * * * * * * * * * * * 
  */
 function parseData(data){
-  console.log(data)
+  // console.log(data)
+  makeUsagePerDay(data);
   for(i = 0; i < data.length; i++)
 	{
     created_at = getCreatedTime(data,i);
