@@ -79,12 +79,32 @@ let massPopChart = new Chart(myChart, {
  * 使用 p5.js
  * https://p5js.org/examples/
  */
-let data = {}; 
+let data = {} ; 
 function setup() {
-    data = loadJSON("https://iot.martinintw.com/api/v1/data/12345614");
+    data = loadJSON("https://iot.martinintw.com/api/v1/data/12345614",parseData);
     //目前讀完只有顯示在console，待parse並放到圖中
-    console.log(data); 
+    //console.log(data);
+	
+	
 }
+function parseData(data){
+	//console.log(data[0].created_at);
+	//console.log(data.length);
+	for(i = 0; i < data.length; i++)
+	{
+		getCreatedTime(data,i);
+	}
+	
+}
+
+function getCreatedTime(data,num)
+{
+	created_at = data[num].created_at;
+	console.log(created_at);
+}
+
+
+
 
 
 
