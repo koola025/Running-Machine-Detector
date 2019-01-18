@@ -90,56 +90,66 @@ function hourStats(data){
 	count[22] = 0;
 	for(i = 0; i < data.length; i++)
 	{
-		if(data[i].created_at[11] == '0' &&  data[i].created_at[12] == '7')
+    hour[i] = time[i].split(":")[0];
+
+		if(hour[i] == "07")
 			count[7] ++;
-		else if(data[i].created_at[11] == '0' &&  data[i].created_at[12] == '8')
+		else if(hour[i] == "08")
 			count[8] ++;
-		else if(data[i].created_at[11] == '0' &&  data[i].created_at[12] == '9')
-			count[9] ++;
-		else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '0')
-			count[10] ++;
-		else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '1')
-			count[11] ++;
-		else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '2')
-			count[12] ++;
-		else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '3')
-			count[13] ++;
-		else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '4')
-			count[14] ++;
-		else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '5')
-			count[15] ++;
-		else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '6')
-			count[16] ++;
-		else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '7')
-			count[17] ++;
-		else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '8')
-			count[18] ++;
-		else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '9')
-			count[19] ++;
-		else if(data[i].created_at[11] == '2' &&  data[i].created_at[12] == '0')
-			count[20] ++;
-		else if(data[i].created_at[11] == '2' &&  data[i].created_at[12] == '1')
-			count[21] ++;
-		else if(data[i].created_at[11] == '2' &&  data[i].created_at[12] == '2')
-			count[22] ++;
+		else if(hour[i] == "09")
+      count[9] ++;
+    else count[hour[i]]++;
+
+		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '0')
+		// 	count[10] ++;
+		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '1')
+		// 	count[11] ++;
+		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '2')
+		// 	count[12] ++;
+		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '3')
+		// 	count[13] ++;
+		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '4')
+		// 	count[14] ++;
+		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '5')
+		// 	count[15] ++;
+		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '6')
+		// 	count[16] ++;
+		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '7')
+		// 	count[17] ++;
+		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '8')
+		// 	count[18] ++;
+		// else if(data[i].created_at[11] == '1' &&  data[i].created_at[12] == '9')
+		// 	count[19] ++;
+		// else if(data[i].created_at[11] == '2' &&  data[i].created_at[12] == '0')
+		// 	count[20] ++;
+		// else if(data[i].created_at[11] == '2' &&  data[i].created_at[12] == '1')
+		// 	count[21] ++;
+		// else if(data[i].created_at[11] == '2' &&  data[i].created_at[12] == '2')
+		// 	count[22] ++;
 		
-	}
-	 addData(hourStatsChart,"07", count[7]);
-	 addData(hourStatsChart,"08", count[8]);
-	 addData(hourStatsChart,"09", count[9]);
-	 addData(hourStatsChart,"10", count[10]);
-	 addData(hourStatsChart,"11", count[11]);
-	 addData(hourStatsChart,"12", count[12]);
-	 addData(hourStatsChart,"13", count[13]);
-	 addData(hourStatsChart,"14", count[14]);
-	 addData(hourStatsChart,"15", count[15]);
-	 addData(hourStatsChart,"16", count[16]);
-	 addData(hourStatsChart,"17", count[17]);
-	 addData(hourStatsChart,"18", count[18]);
-	 addData(hourStatsChart,"19", count[19]);
-	 addData(hourStatsChart,"20", count[20]);
-	 addData(hourStatsChart,"21", count[21]);
-	 addData(hourStatsChart,"22", count[22]);
+  }
+  
+  for(i=7;i<=22;i++){
+    addData(hourStatsChart,i, count[i]*100/data.length);
+  }
+  
+	//  addData(hourStatsChart,"07", count[7]*100/data.length);
+	//  addData(hourStatsChart,"08", count[8]*100/data.length);
+	//  addData(hourStatsChart,"09", count[9]*100/data.length);
+	//  addData(hourStatsChart,"10", count[10]*100/data.length);
+	//  addData(hourStatsChart,"11", count[11]*100/data.length);
+	//  addData(hourStatsChart,"12", count[12]*100/data.length);
+	//  addData(hourStatsChart,"13", count[13]*100/data.length);
+	//  addData(hourStatsChart,"14", count[14]*100/data.length);
+	//  addData(hourStatsChart,"15", count[15]*100/data.length);
+	//  addData(hourStatsChart,"16", count[16]*100/data.length);
+	//  addData(hourStatsChart,"17", count[17]*100/data.length);
+	//  addData(hourStatsChart,"18", count[18]*100/data.length);
+	//  addData(hourStatsChart,"19", count[19]*100/data.length);
+	//  addData(hourStatsChart,"20", count[20]*100/data.length);
+	//  addData(hourStatsChart,"21", count[21]*100/data.length);
+  //  addData(hourStatsChart,"22", count[22]*100/data.length);
+  
 }
 
 /*
@@ -236,7 +246,7 @@ let hourStatsChart = new Chart(hourChart, {
   data:{
     labels: [],
     datasets:[{
-      label:'Population',
+      label:'使用率(%)',
       data:[
         
       ],
@@ -259,7 +269,7 @@ let hourStatsChart = new Chart(hourChart, {
   options:{
     title:{
       display:true,
-      text:'每小時使用人數',
+      text:'尖峰時段預測',
       fontSize:25
     },
     legend:{
