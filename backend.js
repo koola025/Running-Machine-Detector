@@ -304,17 +304,13 @@ function getCreatedTime(data,num)
   return data[num].created_at;
 }
 
-
 /*
- * 加一筆資料到圖表中 (會設成藍色) * * * * * * * * * * * * * * 
+ * 加一筆資料到圖表中 * * * * * * * * * * * * * * 
  */
 function addData(chart, label, data) {
   chart.data.labels.push(label);
   chart.data.datasets.forEach((dataset) => {
       dataset.data.push(data);
-
-      dataset.backgroundColor= window.chartColors.lightBlue;
-      dataset.borderColor = window.chartColors.blue;
   });
   chart.update();
 }
@@ -360,25 +356,20 @@ let massPopChart = new Chart(usagePerDay, {
     datasets:[{
       label:'Count',
       // fill: false,
-      pointBackgroundColor: window.chartColors.blue,
-      backgroundColor: window.chartColors.yellow,
-      borderColor: window.chartColors.blue,
+     // pointBackgroundColor: window.chartColors.blue,
+      //backgroundColor: window.chartColors.yellow,
+      //borderColor: window.chartColors.blue,
       // steppedLine: true,
       data:[
         
       ],
       // backgroundColor:'rgba(255, 99, 132, 0.6)',      // 可自訂背景顏色
-      backgroundColor:[
-        // 'rgba(255, 99, 132, 0.6)',
-        // 'rgba(54, 162, 235, 0.6)',
-        // 'rgba(255, 206, 86, 0.6)',
-        // 'rgba(75, 192, 192, 0.6)',
-        // 'rgba(153, 102, 255, 0.6)',
-        // 'rgba(255, 159, 64, 0.6)',
-        // 'rgba(255, 99, 132, 0.6)'
-      ],
+      backgroundColor:'rgba(255, 99, 132, 0.2)',
+      
+      borderColor:'rgba(255,99,132,1)',
+      
       borderWidth:1,
-      borderColor:'#777',
+      borderColor:[],
       hoverBorderWidth:3,
       hoverBorderColor:'#000'
     }]
@@ -417,7 +408,8 @@ let massPopChart = new Chart(usagePerDay, {
               unit: 'day',
               // round: 'true'
           }
-      }]
+      }],
+      
     },
     elements: {
       line: {
@@ -439,17 +431,9 @@ let hourStatsChart = new Chart(hourChart, {
         
       ],
       //backgroundColor:'green',      //可自訂背景顏色
-      backgroundColor:[
-        // 'rgba(255, 99, 132, 0.6)',
-        // 'rgba(54, 162, 235, 0.6)',
-        // 'rgba(255, 206, 86, 0.6)',
-        // 'rgba(75, 192, 192, 0.6)',
-        // 'rgba(153, 102, 255, 0.6)',
-        // 'rgba(255, 159, 64, 0.6)',
-        // 'rgba(255, 99, 132, 0.6)'
-      ],
+      backgroundColor:'rgba(54, 162, 235, 0.2)',
       borderWidth:1,
-      borderColor:'#777',
+      borderColor:'rgba(54, 162, 235, 1)',
       hoverBorderWidth:3,
       hoverBorderColor:'#000'
     }]
@@ -494,17 +478,9 @@ let weekStatsChart = new Chart(weekChart, {
         
       ],
       //backgroundColor:'green',      //可自訂背景顏色
-      backgroundColor:[
-        // 'rgba(255, 99, 132, 0.6)',
-        // 'rgba(54, 162, 235, 0.6)',
-        // 'rgba(255, 206, 86, 0.6)',
-        // 'rgba(75, 192, 192, 0.6)',
-        // 'rgba(153, 102, 255, 0.6)',
-        // 'rgba(255, 159, 64, 0.6)',
-        // 'rgba(255, 99, 132, 0.6)'
-      ],
+      backgroundColor:'rgba(255, 206, 86, 0.2)',
       borderWidth:1,
-      borderColor:'#777',
+      borderColor:'rgba(255, 206, 86, 1)',
       hoverBorderWidth:3,
       hoverBorderColor:'#000'
     }]
@@ -549,17 +525,9 @@ let latestHourStatsChart = new Chart(latestHourChart, {
         
       ],
       //backgroundColor:'green',      //可自訂背景顏色
-      backgroundColor:[
-        // 'rgba(255, 99, 132, 0.6)',
-        // 'rgba(54, 162, 235, 0.6)',
-        // 'rgba(255, 206, 86, 0.6)',
-        // 'rgba(75, 192, 192, 0.6)',
-        // 'rgba(153, 102, 255, 0.6)',
-        // 'rgba(255, 159, 64, 0.6)',
-        // 'rgba(255, 99, 132, 0.6)'
-      ],
+      backgroundColor:'rgba(75, 192, 192, 0.2)',
       borderWidth:1,
-      borderColor:'#777',
+      borderColor:'rgba(75, 192, 192, 1)',
       hoverBorderWidth:3,
       hoverBorderColor:'#000'
     }]
