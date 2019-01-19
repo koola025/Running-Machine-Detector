@@ -1,6 +1,6 @@
 
 /*
- * 取得現在日期時間
+ * 取得現在日期時間 * * * * * * * * * * * * * * * * * * * *
  */
 var today = new Date();
 var dd = today.getDate();
@@ -20,14 +20,17 @@ today = mm + '/' + dd + '/' + yyyy;
 
 
 
+
+
 /*
- * 讀取MQTT取資料 (記得先裝chrome擴充)
+ * 讀取MQTT取資料 (記得先裝chrome擴充) * * * * * * * * * * * * 
  * 使用 p5.js
  * https://p5js.org/examples/
  */
-let data = {} ; 
+let data = {} ; // 讀回來的JSON object
 
-let day = {};
+// 讀回來的所有資料的日期、時間、小時
+let day = {}; 
 let time = {};
 let hour = {};
 function setup() {
@@ -37,12 +40,43 @@ function setup() {
 
 
 
+function resetChart(){
+  // removeData(massPopChart);
+  // removeData(hourStatsChart);
+
+  // massPopChart.clear();
+  // hourStatsChart.clear();
+  
+  // massPopChart.reset();
+  // hourStatsChart.reset();
+  // massPopChart.update();
+  // setup();
+
+  loadJSON("https://iot.martinintw.com/api/v1/data/12345614",lastUsed);
+}
+
 /*
- * Parse JSON
+ * 計算上一筆資料跟現在距離幾毫秒 * * * * * * * * * * * * * * *
  */
-// let dataArray = [];
+
+function lastUsed(data){
+  created_at = getCreatedTime(data,data.length-1);
+  // var last = new Date("2019-01-18 22:49:37");
+  var last = new Date(created_at);
+  var now = new Date();
+  console.log(now.valueOf() - last.valueOf());
+  if(now.valueOf() - last.valueOf() < 600000) console.log("10分鐘內有人用過");
+  else console.log("10分鐘內沒人用過");
+}
 
 
+
+/*
+ * 作圖：每日用量 * * * * * * * * * * * * * * * * * * * * * * 
+ */
+let count = 1;
+let old_data;
+let new_data;
 function makeUsagePerDay(data) {
   if (data.length > 0) new_data = getCreatedTime(data, 0);
 	for(i = 1; i < data.length; i++)
@@ -70,8 +104,12 @@ function makeUsagePerDay(data) {
       addData(massPopChart, old_js_time, count);
       count = 1;
     }
+  }
 }
   
+/*
+ * 作圖：小時統計 * * * * * * * * * * * * * * * * * * * * * * 
+ */
 function hourStats(data){
   var count = []; 
 
@@ -101,53 +139,46 @@ function hourStats(data){
 			count[8] ++;
 		else if(hour[i] == "09")
       count[9] ++;
-    else count[hour[i]]++;
-
-		
-		
+    else count[hour[i]]++;		
   }
   
   for(i=7;i<=22;i++){
     addData(hourStatsChart,i, count[i]*100/data.length);
-  }
-  
-	
-  
+  } 
 }
 
-
-let count = 1;
-let old_data;
-let new_data;
-function parseData(data){
-  console.log(data)
-  
-  for(i = 0; i < data.length; i++)
-	{
-    created_at = getCreatedTime(data,i);
-    console.log (created_at);
-    day[i] = created_at.split(" ")[0];
-    time[i] = created_at.split(" ")[1];
-    // dataArray.push(created_at);
-    addData(massPopChart, created_at, 1);
-    
-  }
-  // console.log (dataArray);
-  hourStats(data);
-  
-  
-  makeUsagePerDay(data);
-    // if (i < 5) console.log (year + "/" + month + "/" + day);
-  }
-  // console.log (dataArray);
-
+function removeData(chart) {
+  var i;
+  for(i=0;i<chart.data.labels.length;)
+  chart.data.labels.pop();
+  chart.data.datasets.forEach((dataset) => {
+      dataset.data.pop();
+  });
+  chart.update();
 }
-
 
 
 
 /*
- * Parse 時間
+ * Parse JSON * * * * * * * * * * * * * * * * * * * * * * 
+ */
+function parseData(data){
+  // console.log(data)
+  makeUsagePerDay(data);
+  for(i = 0; i < data.length; i++)
+	{
+    created_at = getCreatedTime(data,i);
+    day[i] = created_at.split(" ")[0];
+    time[i] = created_at.split(" ")[1];
+  }
+  hourStats(data);
+  // lastUsed(data);
+  
+}
+
+
+/*
+ * Parse created_at * * * * * * * * * * * * * * * * * * *
  */
 function getCreatedTime(data,num)
 {
@@ -156,7 +187,7 @@ function getCreatedTime(data,num)
 
 
 /*
- * 加一筆資料到圖表中
+ * 加一筆資料到圖表中 (會設成藍色) * * * * * * * * * * * * * * 
  */
 function addData(chart, label, data) {
   chart.data.labels.push(label);
@@ -170,8 +201,9 @@ function addData(chart, label, data) {
 }
 
 
+
 /* 
- * 圖表相關
+ * 圖表相關 * * * * * * * * * * * * * * * * * * * * * * * *
  * 使用 chart.js
  * https://www.chartjs.org/docs/latest/charts/
  */
@@ -180,10 +212,7 @@ function addData(chart, label, data) {
 let hourChart = document.getElementById('hour').getContext('2d');
 let usagePerDay = document.getElementById('chart').getContext('2d');
 
-
-
-//圖表的全域變數
-
+// 定義顏色
 window.chartColors = {
 	red: 'rgb(255, 99, 132)',
 	orange: 'rgb(255, 159, 64)',
@@ -195,16 +224,13 @@ window.chartColors = {
 	grey: 'rgb(201, 203, 207)'
 };
 
+// 圖表的全域變數
 Chart.defaults.global.defaultFontFamily = 'Lato';
 Chart.defaults.global.defaultFontSize = 18;
 Chart.defaults.global.defaultFontColor = '#777';
 
 
-
-
-
-
-//圖表Object
+// 圖表Object: 每天用量
 let massPopChart = new Chart(usagePerDay, {
   type:'line', //換後面這些就會出現不同的圖： bar, horizontalBar, pie, line, doughnut, radar, polarArea
   data:{
@@ -279,7 +305,8 @@ let massPopChart = new Chart(usagePerDay, {
   }
 
 });
-// 07 ~ 22
+
+// 圖表Object: 小時累計 (07 ~ 22)
 let hourStatsChart = new Chart(hourChart, {
   type:'bar', //換後面這些就會出現不同的圖： bar, horizontalBar, pie, line, doughnut, radar, polarArea
   data:{
