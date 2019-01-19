@@ -139,13 +139,13 @@ function weekStats(data){
 	}
 	
 	
-    addData(weekStatsChart,"一", count[1]*100/data.length);
-	addData(weekStatsChart,"二", count[2]*100/data.length);
-	addData(weekStatsChart,"三", count[3]*100/data.length);
-	addData(weekStatsChart,"四", count[4]*100/data.length);
-	addData(weekStatsChart,"五", count[5]*100/data.length);
-	addData(weekStatsChart,"六", count[6]*100/data.length);
-	addData(weekStatsChart,"日", count[7]*100/data.length);
+    addData(weekStatsChart,"Mon", count[1]*100/data.length);
+	addData(weekStatsChart,"Tue", count[2]*100/data.length);
+	addData(weekStatsChart,"Wed", count[3]*100/data.length);
+	addData(weekStatsChart,"Thu", count[4]*100/data.length);
+	addData(weekStatsChart,"Fri", count[5]*100/data.length);
+	addData(weekStatsChart,"Sat", count[6]*100/data.length);
+	addData(weekStatsChart,"Sun", count[7]*100/data.length);
   
 }
 
@@ -363,7 +363,7 @@ let hourStatsChart = new Chart(hourChart, {
 
 // 圖表Object: 星期累計 (一到日)
 let weekStatsChart = new Chart(weekChart, {
-  type:'bar', //換後面這些就會出現不同的圖： bar, horizontalBar, pie, line, doughnut, radar, polarArea
+  type:'horizontalBar', //換後面這些就會出現不同的圖： bar, horizontalBar, pie, line, doughnut, radar, polarArea
   data:{
     labels: [],
     datasets:[{
