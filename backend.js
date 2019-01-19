@@ -59,10 +59,24 @@ function resetChart(i){
 
   // setup();
   if(i!=0) currentMachine = i;
-
-  if(currentMachine==1) loadJSON("https://iot.martinintw.com/api/v1/data/12345614",parseData);
-  else if(currentMachine==2) loadJSON("https://iot.martinintw.com/api/v1/data/12345615",parseData);
-  else if(currentMachine==3) loadJSON("https://iot.martinintw.com/api/v1/data/12345616",parseData);
+  document.getElementById("li1").classList.remove("active");
+  document.getElementById("li2").classList.remove("active");
+  document.getElementById("li3").classList.remove("active");
+  if(currentMachine==1) {
+    loadJSON("https://iot.martinintw.com/api/v1/data/12345614",parseData);
+    var element = document.getElementById("li1");
+    element.classList.add("active");
+  }
+  else if(currentMachine==2) {
+    loadJSON("https://iot.martinintw.com/api/v1/data/12345615",parseData);
+    var element = document.getElementById("li2");
+    element.classList.add("active");
+  }
+  else if(currentMachine==3) {
+    loadJSON("https://iot.martinintw.com/api/v1/data/12345616",parseData);
+    var element = document.getElementById("li3");
+    element.classList.add("active");
+  }
   else console.log("????");
 
 }

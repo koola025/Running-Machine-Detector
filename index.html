@@ -53,21 +53,21 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
           <!-- Left -->
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+          <ul class="navbar-nav mr-auto" >
+            <li class="nav-item active" id = "li1">
               <a class="nav-link waves-effect" href="#">
-                <button onclick="resetChart(1)">跑步機</button>
-                <span class="sr-only">(current)</span>
+                <button type="button" class="btn btn-info"onclick="resetChart(1)">跑步機</button>
+                <!-- <span class="sr-only">(current)</span> -->
               </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id = "li2">
               <a class="nav-link waves-effect" href="#">
-                  <button onclick="resetChart(2)">飛輪</button>
+                  <button type="button" class="btn btn-info" onclick="resetChart(2)">飛輪</button>
             </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id = "li3">
               <a class="nav-link waves-effect" href="#">
-                  <button onclick="resetChart(3)">舉重機</button></a>
+                  <button type="button" class="btn btn-info"onclick="resetChart(3)">舉重機</button></a>
             </li>
           </ul>
 
@@ -107,7 +107,7 @@
 
     <div class="container-fluid mt-5">
 
-        <button onclick=resetChart(0)>更新</button>
+        <button type="button" class="btn btn-info" onclick=resetChart(0)>更新</button>
         <p>上次更新時間 <span id="lastUpdateTime">0000</span></p>
 
       <!--Grid row-->
