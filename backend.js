@@ -66,16 +66,19 @@ function resetChart(i){
     loadJSON("https://iot.martinintw.com/api/v1/data/12345614",parseData);
     var element = document.getElementById("li1");
     element.classList.add("active");
+    document.getElementById("image").src='img/gym_running_people.png';
   }
   else if(currentMachine==2) {
     loadJSON("https://iot.martinintw.com/api/v1/data/12345615",parseData);
     var element = document.getElementById("li2");
     element.classList.add("active");
+    document.getElementById("image").src='img/gym_aerobike_people.png';
   }
   else if(currentMachine==3) {
     loadJSON("https://iot.martinintw.com/api/v1/data/12345616",parseData);
     var element = document.getElementById("li3");
     element.classList.add("active");
+    document.getElementById("image").src='img/undou_bench_press_woman.png';
   }
   else console.log("????");
 

@@ -1503,7 +1503,7 @@ button.bg-light:focus {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1; }
-/* 
+
 @font-face {
   font-family: "Roboto";
   src: local(Roboto Thin), url("../font/roboto/Roboto-Thin.eot");
@@ -1532,7 +1532,7 @@ button.bg-light:focus {
   font-family: "Roboto";
   src: url("../font/roboto/Roboto-Bold.eot");
   src: url("../font/roboto/Roboto-Bold.eot?#iefix") format("embedded-opentype"), url("../font/roboto/Roboto-Bold.woff2") format("woff2"), url("../font/roboto/Roboto-Bold.woff") format("woff"), url("../font/roboto/Roboto-Bold.ttf") format("truetype");
-  font-weight: 700; } */
+  font-weight: 700; } 
 
 body {
   font-family: "Roboto", sans-serif;
@@ -1905,9 +1905,9 @@ a.text-light:hover, a.text-light:focus {
   z-index: 1; }
 
 .waves-button {
-  padding: 0.85em 1.1em;
-  -webkit-border-radius: 0.2em;
-  border-radius: 0.2em; }
+   padding: 0.85em 1.1em;
+   -webkit-border-radius: 0.2em;
+   border-radius: 0.2em; } 
 
 .waves-button-input {
   margin: 0;
@@ -4537,14 +4537,16 @@ a.waves-effect, a.waves-light {
 .btn {
   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  padding: 0.84rem 2.14rem;
-  font-size: 0.81rem;
+   /* padding: 0.84rem 2.14rem;  */
+  /* font-size: 0.81rem; */
+  font-size: 0.9rem;
   -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   -o-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-  margin: 0.375rem;
+  /* margin: 0.375rem; */
+  margin: 0.2rem;
   border: 0;
   -webkit-border-radius: 0.125rem;
   border-radius: 0.125rem;

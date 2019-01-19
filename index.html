@@ -56,18 +56,17 @@
           <ul class="navbar-nav mr-auto" >
             <li class="nav-item active" id = "li1">
               <a class="nav-link waves-effect" href="#">
-                <button type="button" class="btn btn-info"onclick="resetChart(1)">跑步機</button>
-                <!-- <span class="sr-only">(current)</span> -->
+                <button type="button" class="btn btn-link" onclick="resetChart(1)">跑步機</button>
               </a>
             </li>
             <li class="nav-item" id = "li2">
               <a class="nav-link waves-effect" href="#">
-                  <button type="button" class="btn btn-info" onclick="resetChart(2)">飛輪</button>
+                  <button type="button" class="btn btn-link" onclick="resetChart(2)">飛輪</button>
             </a>
             </li>
             <li class="nav-item" id = "li3">
               <a class="nav-link waves-effect" href="#">
-                  <button type="button" class="btn btn-info"onclick="resetChart(3)">舉重機</button></a>
+                  <button type="button" class="btn btn-link"onclick="resetChart(3)">舉重機</button></a>
             </li>
           </ul>
 
@@ -81,7 +80,7 @@
     <div class="sidebar-fixed position-fixed">
 
       <a class="logo-wrapper waves-effect">
-        <img src="img/gym_running_people.png" class="img-fluid" alt="">
+        <img src="img/gym_running_people.png" class="img-fluid" alt="" id="image">
       </a>
 
       <div class="list-group list-group-flush">
@@ -108,18 +107,18 @@
     <div class="container-fluid mt-5">
 
         <button type="button" class="btn btn-info" onclick=resetChart(0)>更新</button>
-        <p>上次更新時間 <span id="lastUpdateTime">0000</span></p>
+        <p class="mt-2">上次更新時間 <span id="lastUpdateTime">0000</span></p>
 
       <!--Grid row-->
       <div class="row fadeIn">
 
         <!--Grid column-->
-        <div class="col-12 col-lg-6 pt-5" id="chartGrid">
+        <div class="col-12 pt-5" id="chartGrid">
           <!--Card-->
           <div class="card">
             <!-- Card header -->
             <div class="card-header text-center">
-              每日使用量
+              <h5 class="pt-2">每日使用量</h5>
             </div>
             <!--Card content-->
             <div class="card-body">
@@ -131,12 +130,12 @@
         <!--Grid column-->
 
         <!--Grid column-->
-        <div class="col-12 col-lg-6 pt-5" id="hourGrid">
+        <div class="col-12 pt-5" id="hourGrid">
             <!--Card-->
             <div class="card hour">
               <!-- Card header -->
               <div class="card-header text-center">
-                尖峰時段預測
+                  <h5 class="pt-2">尖峰時段預測</h5>
               </div>
               <!--Card content-->
               <div class="card-body">
@@ -148,12 +147,12 @@
           <!--Grid column-->
 
         <!--Grid column-->
-        <div class="col-12 col-lg-6 pt-5" id="weekGrid">
+        <div class="col-12 pt-5" id="weekGrid">
             <!--Card-->
             <div class="card week">
               <!-- Card header -->
               <div class="card-header text-center">
-                星期使用狀況
+                  <h5 class="pt-2">星期使用狀況</h5>
               </div>
               <!--Card content-->
               <div class="card-body">
@@ -165,12 +164,12 @@
           <!--Grid column-->
 
         <!--Grid column-->
-        <div class="col-12 col-lg-6 mb-3 pt-5" id="latesthourGrid">
+        <div class="col-12 mb-3 pt-5" id="latesthourGrid">
             <!--Card-->
             <div class="card latesthour">
               <!-- Card header -->
               <div class="card-header text-center">
-                最近一小時使用狀況
+                  <h5 class="pt-2">最近一小時使用狀況</h5>
                 </div>
               <!--Card content-->
               <div class="card-body">
