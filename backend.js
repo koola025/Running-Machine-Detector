@@ -196,12 +196,18 @@ function parseData(data){
     day[i] = created_at.split(" ")[0];
     time[i] = created_at.split(" ")[1];
 	  week[i] = new Date(created_at).getDay();
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 8a1a3a29023d48945b89d29a7cce53a06282ffc1
 
   }
   hourStats(data);
   weekStats(data);
+<<<<<<< HEAD
   latestHourStas(data)
+=======
+>>>>>>> 8a1a3a29023d48945b89d29a7cce53a06282ffc1
 
   
 }
@@ -247,6 +253,7 @@ let hourChart = document.getElementById('hour').getContext('2d');
 let usagePerDay = document.getElementById('chart').getContext('2d');
 let weekChart = document.getElementById('week').getContext('2d');
 let latestHourChart = document.getElementById('latesthour').getContext('2d');
+
 
 // 定義顏色
 window.chartColors = {
