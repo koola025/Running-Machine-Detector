@@ -39,8 +39,8 @@ function setup() {
 }
 
 
-
-function resetChart(){
+let currentMachine = 1;
+function resetChart(i){
 
   SetLastUpdateTime();
 
@@ -58,8 +58,12 @@ function resetChart(){
   latestHourStatsChart.update();
 
   // setup();
+  if(i!=0) currentMachine = i;
 
-  loadJSON("https://iot.martinintw.com/api/v1/data/12345614",parseData);
+  if(currentMachine==1) loadJSON("https://iot.martinintw.com/api/v1/data/12345614",parseData);
+  else if(currentMachine==2) loadJSON("https://iot.martinintw.com/api/v1/data/12345615",parseData);
+  else if(currentMachine==3) loadJSON("https://iot.martinintw.com/api/v1/data/12345616",parseData);
+  else console.log("????");
 
 }
 

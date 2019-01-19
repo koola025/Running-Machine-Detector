@@ -55,16 +55,19 @@
           <!-- Left -->
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link waves-effect" href="#">跑步機
+              <a class="nav-link waves-effect" href="#">
+                <button onclick="resetChart(1)">跑步機</button>
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link waves-effect" href="#">飛輪
+              <a class="nav-link waves-effect" href="#">
+                  <button onclick="resetChart(2)">飛輪</button>
             </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link waves-effect" href="#">舉重器</a>
+              <a class="nav-link waves-effect" href="#">
+                  <button onclick="resetChart(3)">舉重機</button></a>
             </li>
           </ul>
 
@@ -104,14 +107,14 @@
 
     <div class="container-fluid mt-5">
 
-        <button onclick=resetChart()>更新</button>
+        <button onclick=resetChart(0)>更新</button>
         <p>上次更新時間 <span id="lastUpdateTime">0000</span></p>
 
       <!--Grid row-->
       <div class="row fadeIn">
 
         <!--Grid column-->
-        <div class="col-md-12 pt-5" id="chartGrid">
+        <div class="col-12 col-lg-6 pt-5" id="chartGrid">
           <!--Card-->
           <div class="card">
             <!-- Card header -->
@@ -128,7 +131,7 @@
         <!--Grid column-->
 
         <!--Grid column-->
-        <div class="col-md-12 pt-5" id="hourGrid">
+        <div class="col-12 col-lg-6 pt-5" id="hourGrid">
             <!--Card-->
             <div class="card hour">
               <!-- Card header -->
@@ -145,7 +148,7 @@
           <!--Grid column-->
 
         <!--Grid column-->
-        <div class="col-md-12 pt-5" id="weekGrid">
+        <div class="col-12 col-lg-6 pt-5" id="weekGrid">
             <!--Card-->
             <div class="card week">
               <!-- Card header -->
@@ -162,7 +165,7 @@
           <!--Grid column-->
 
         <!--Grid column-->
-        <div class="col-md-12 mb-3 pt-5" id="latesthourGrid">
+        <div class="col-12 col-lg-6 mb-3 pt-5" id="latesthourGrid">
             <!--Card-->
             <div class="card latesthour">
               <!-- Card header -->
