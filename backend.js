@@ -109,6 +109,36 @@ function makeUsagePerDay(data) {
     }
   }
 }
+
+function latestHourStas(data)
+{
+	var count = 0;
+	now = new Date().valueOf();
+	console.log(now);
+	for(i = 0; i < data.length; i++)
+	{
+		
+		//console.log(new Date(data[i].created_at).valueOf());
+		temp = new Date(data[i].created_at).valueOf();
+		difference = now - temp;
+		//console.log(temp);
+		if(difference <= 3600000){
+			console.log("在一小時以內");
+			addData(latestHourStatsChart,data[i].created_at,1);
+		}
+		else{
+			console.log("超過一小時");
+			count ++;
+		}
+	}
+	if(count == data.length){
+		console.log("最近一小時無人使用");
+		addData(latestHourStatsChart,"最近一小時無人使用",1);
+	}
+	
+	 
+	
+}
   
 /*
  * 作圖：小時統計 * * * * * * * * * * * * * * * * * * * * * * 
@@ -205,10 +235,13 @@ function parseData(data){
     day[i] = created_at.split(" ")[0];
     time[i] = created_at.split(" ")[1];
 	  week[i] = new Date(created_at).getDay();
+	
 
   }
   hourStats(data);
   weekStats(data);
+  latestHourStas(data)
+
   
 }
 
@@ -252,6 +285,8 @@ function addData(chart, label, data) {
 let hourChart = document.getElementById('hour').getContext('2d');
 let usagePerDay = document.getElementById('chart').getContext('2d');
 let weekChart = document.getElementById('week').getContext('2d');
+let latestHourChart = document.getElementById('latesthour').getContext('2d');
+
 
 // 定義顏色
 window.chartColors = {
@@ -432,6 +467,61 @@ let weekStatsChart = new Chart(weekChart, {
     title:{
       display:true,
       text:'星期使用狀況',
+      fontSize:25
+    },
+    legend:{
+      display:true,
+      position:'right',
+      labels:{
+        fontColor:'#000'
+      }
+    },
+    layout:{
+      padding:{
+        left:50,
+        right:0,
+        bottom:0,
+        top:0
+      }
+    },
+    tooltips:{
+      enabled:true
+    }
+  }
+
+});
+
+// 圖表Object: 最近一小時使用狀況
+let latestHourStatsChart = new Chart(latestHourChart, {
+  type:'doughnut', //換後面這些就會出現不同的圖： bar, horizontalBar, pie, line, doughnut, radar, polarArea
+
+  data:{
+    labels: [],
+    datasets:[{
+      label:'使用率(%)',
+      data:[
+        
+      ],
+      //backgroundColor:'green',      //可自訂背景顏色
+      backgroundColor:[
+        // 'rgba(255, 99, 132, 0.6)',
+        // 'rgba(54, 162, 235, 0.6)',
+        // 'rgba(255, 206, 86, 0.6)',
+        // 'rgba(75, 192, 192, 0.6)',
+        // 'rgba(153, 102, 255, 0.6)',
+        // 'rgba(255, 159, 64, 0.6)',
+        // 'rgba(255, 99, 132, 0.6)'
+      ],
+      borderWidth:1,
+      borderColor:'#777',
+      hoverBorderWidth:3,
+      hoverBorderColor:'#000'
+    }]
+  },
+  options:{
+    title:{
+      display:true,
+      text:'最近一小時使用狀況',
       fontSize:25
     },
     legend:{
