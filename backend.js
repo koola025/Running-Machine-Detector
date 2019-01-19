@@ -74,6 +74,7 @@ function lastUsed(data){
 /*
  * 作圖：每日用量 * * * * * * * * * * * * * * * * * * * * * * 
  */
+
 let count = 1;
 let old_data;
 let new_data;
@@ -113,7 +114,8 @@ function makeUsagePerDay(data) {
 function hourStats(data){
   var count = []; 
 
-  count[7] = 0;
+
+	count[7] = 0;
 	count[8] = 0;
 	count[9] = 0;
 	count[10] = 0;
@@ -159,6 +161,36 @@ function removeData(chart) {
 
 
 
+function weekStats(data){
+	var count = [];
+	count[1] = 0;
+	count[2] = 0;
+	count[3] = 0;
+	count[4] = 0;
+	count[5] = 0;
+	count[6] = 0;
+	count[7] = 0;
+	
+	
+	for(i = 0; i < data.length; i++)
+	{
+		count[week[i]]++;
+	}
+	
+	
+  addData(weekStatsChart,"Mon", count[1]*100/data.length);
+	addData(weekStatsChart,"Tue", count[2]*100/data.length);
+	addData(weekStatsChart,"Wed", count[3]*100/data.length);
+	addData(weekStatsChart,"Thu", count[4]*100/data.length);
+	addData(weekStatsChart,"Fri", count[5]*100/data.length);
+	addData(weekStatsChart,"Sat", count[6]*100/data.length);
+	addData(weekStatsChart,"Sun", count[7]*100/data.length);
+  
+}
+
+
+
+
 /*
  * Parse JSON * * * * * * * * * * * * * * * * * * * * * * 
  */
@@ -170,9 +202,11 @@ function parseData(data){
     created_at = getCreatedTime(data,i);
     day[i] = created_at.split(" ")[0];
     time[i] = created_at.split(" ")[1];
+	  week[i] = new Date(created_at).getDay();
+
   }
   hourStats(data);
-  // lastUsed(data);
+  weekStats(data);
   
 }
 
@@ -182,6 +216,10 @@ function parseData(data){
  */
 function getCreatedTime(data,num)
 {
+
+	//date = new Date(data[num].created_at);
+	//console.log(date);
+
   return data[num].created_at;
 }
 
@@ -211,6 +249,7 @@ function addData(chart, label, data) {
 
 let hourChart = document.getElementById('hour').getContext('2d');
 let usagePerDay = document.getElementById('chart').getContext('2d');
+let weekChart = document.getElementById('week').getContext('2d');
 
 // 定義顏色
 window.chartColors = {
@@ -336,6 +375,61 @@ let hourStatsChart = new Chart(hourChart, {
     title:{
       display:true,
       text:'尖峰時段預測',
+      fontSize:25
+    },
+    legend:{
+      display:true,
+      position:'right',
+      labels:{
+        fontColor:'#000'
+      }
+    },
+    layout:{
+      padding:{
+        left:50,
+        right:0,
+        bottom:0,
+        top:0
+      }
+    },
+    tooltips:{
+      enabled:true
+    }
+  }
+
+});
+
+// 圖表Object: 星期累計 (一到日)
+let weekStatsChart = new Chart(weekChart, {
+  type:'horizontalBar', //換後面這些就會出現不同的圖： bar, horizontalBar, pie, line, doughnut, radar, polarArea
+
+  data:{
+    labels: [],
+    datasets:[{
+      label:'使用率(%)',
+      data:[
+        
+      ],
+      //backgroundColor:'green',      //可自訂背景顏色
+      backgroundColor:[
+        // 'rgba(255, 99, 132, 0.6)',
+        // 'rgba(54, 162, 235, 0.6)',
+        // 'rgba(255, 206, 86, 0.6)',
+        // 'rgba(75, 192, 192, 0.6)',
+        // 'rgba(153, 102, 255, 0.6)',
+        // 'rgba(255, 159, 64, 0.6)',
+        // 'rgba(255, 99, 132, 0.6)'
+      ],
+      borderWidth:1,
+      borderColor:'#777',
+      hoverBorderWidth:3,
+      hoverBorderColor:'#000'
+    }]
+  },
+  options:{
+    title:{
+      display:true,
+      text:'星期使用狀況',
       fontSize:25
     },
     legend:{
