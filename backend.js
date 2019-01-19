@@ -41,6 +41,9 @@ function setup() {
 
 
 function resetChart(){
+
+  SetLastUpdateTime();
+
   removeData(massPopChart);
   removeData(hourStatsChart);
   removeData(weekStatsChart);
@@ -57,7 +60,25 @@ function resetChart(){
   // setup();
 
   loadJSON("https://iot.martinintw.com/api/v1/data/12345614",parseData);
+
 }
+
+
+
+
+
+
+let LastUpdateTime;
+
+function SetLastUpdateTime(){
+  LastUpdateTime = new Date();
+  console.log(LastUpdateTime);
+  var str = LastUpdateTime.toString().split(" ")[4];
+
+  document.getElementById("lastUpdateTime").innerHTML = str;
+
+}
+
 
 /*
  * 計算上一筆資料跟現在距離幾毫秒 * * * * * * * * * * * * * * *
@@ -71,6 +92,9 @@ function lastUsed(data){
   console.log(now.valueOf() - last.valueOf());
   if(now.valueOf() - last.valueOf() < 600000) console.log("10分鐘內有人用過");
   else console.log("10分鐘內沒人用過");
+
+
+
 }
 
 
@@ -246,7 +270,6 @@ function parseData(data){
 
   
 }
-
 
 /*
  * Parse created_at * * * * * * * * * * * * * * * * * * *
