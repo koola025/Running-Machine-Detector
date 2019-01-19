@@ -82,6 +82,7 @@ function makeUsagePerDay(data) {
 function hourStats(data){
   var count = []; 
 
+
 	count[7] = 0;
 	count[8] = 0;
 	count[9] = 0;
@@ -122,6 +123,7 @@ function hourStats(data){
   
 }
 
+
 function weekStats(data){
 	var count = [];
 	count[1] = 0;
@@ -139,7 +141,7 @@ function weekStats(data){
 	}
 	
 	
-    addData(weekStatsChart,"Mon", count[1]*100/data.length);
+  addData(weekStatsChart,"Mon", count[1]*100/data.length);
 	addData(weekStatsChart,"Tue", count[2]*100/data.length);
 	addData(weekStatsChart,"Wed", count[3]*100/data.length);
 	addData(weekStatsChart,"Thu", count[4]*100/data.length);
@@ -150,27 +152,25 @@ function weekStats(data){
 }
 
 
+
 /*
  * Parse JSON * * * * * * * * * * * * * * * * * * * * * * 
  */
 function parseData(data){
   // console.log(data)
   makeUsagePerDay(data);
- 
+
   for(i = 0; i < data.length; i++)
 	{
     created_at = getCreatedTime(data,i);
     day[i] = created_at.split(" ")[0];
     time[i] = created_at.split(" ")[1];
-	week[i] = new Date(created_at).getDay();
-	
-	
-	//console.log(week[i]);
-	
-	
+	  week[i] = new Date(created_at).getDay();
+
   }
   hourStats(data);
   weekStats(data);
+
   
 }
 
@@ -180,8 +180,10 @@ function parseData(data){
  */
 function getCreatedTime(data,num)
 {
+
 	//date = new Date(data[num].created_at);
 	//console.log(date);
+
   return data[num].created_at;
 }
 
@@ -212,6 +214,7 @@ function addData(chart, label, data) {
 let hourChart = document.getElementById('hour').getContext('2d');
 let usagePerDay = document.getElementById('chart').getContext('2d');
 let weekChart = document.getElementById('week').getContext('2d');
+
 
 // 定義顏色
 window.chartColors = {
@@ -364,6 +367,7 @@ let hourStatsChart = new Chart(hourChart, {
 // 圖表Object: 星期累計 (一到日)
 let weekStatsChart = new Chart(weekChart, {
   type:'horizontalBar', //換後面這些就會出現不同的圖： bar, horizontalBar, pie, line, doughnut, radar, polarArea
+
   data:{
     labels: [],
     datasets:[{
