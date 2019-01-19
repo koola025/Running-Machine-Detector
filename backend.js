@@ -41,7 +41,9 @@ function setup() {
 
 
 function resetChart(){
+
   SetLastUpdateTime();
+
   removeData(massPopChart);
   removeData(hourStatsChart);
   removeData(weekStatsChart);
@@ -58,6 +60,7 @@ function resetChart(){
   // setup();
 
   loadJSON("https://iot.martinintw.com/api/v1/data/12345614",parseData);
+
 }
 
 
@@ -73,6 +76,7 @@ function SetLastUpdateTime(){
   var str = LastUpdateTime.toString().split(" ")[4];
 
   document.getElementById("lastUpdateTime").innerHTML = str;
+
 }
 
 
