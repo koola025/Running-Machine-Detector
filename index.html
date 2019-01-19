@@ -29,6 +29,7 @@
 
 </head>
 
+<<<<<<< HEAD
 <body onload=SetLastUpdateTime()  class="grey lighten-3">
 
   <!--Main Navigation-->
@@ -205,6 +206,23 @@
   <script src="backend.js"></script>
 
 
+=======
+<body onload=SetLastUpdateTime() class="bg-light">
+
+    <h1>Running Machine</h1>
+    <button onclick=resetChart()>更新</button>
+    <p>上次更新時間 <span id="lastUpdateTime">0000</span></p>
+    <!-- 放圖表的地方 -->
+    <div class = "container">
+        <canvas id = "chart"></canvas>
+        <canvas id = "hour"></canvas>
+		   <canvas id = "week"></canvas>
+		   <canvas id = "latesthour"></canvas>
+
+    </div>
+
+    <script src="backend.js"></script>
+>>>>>>> 40d9f6de028783f14ac0d8038155f8c0aa38e77e
 </body>
 
 </html>

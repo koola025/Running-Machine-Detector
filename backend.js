@@ -490,7 +490,11 @@ let weekStatsChart = new Chart(weekChart, {
   },
   options:{
     title:{
+<<<<<<< HEAD
       display:false,
+=======
+      display:true,
+>>>>>>> 40d9f6de028783f14ac0d8038155f8c0aa38e77e
       text:'星期使用狀況',
       fontSize:25
     },
@@ -545,7 +549,11 @@ let latestHourStatsChart = new Chart(latestHourChart, {
   },
   options:{
     title:{
+<<<<<<< HEAD
       display:false,
+=======
+      display:true,
+>>>>>>> 40d9f6de028783f14ac0d8038155f8c0aa38e77e
       text:'最近一小時使用狀況',
       fontSize:25
     },
