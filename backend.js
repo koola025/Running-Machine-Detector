@@ -41,18 +41,20 @@ function setup() {
 
 
 function resetChart(){
-  // removeData(massPopChart);
-  // removeData(hourStatsChart);
+  removeData(massPopChart);
+  removeData(hourStatsChart);
+  removeData(weekStatsChart);
 
   // massPopChart.clear();
   // hourStatsChart.clear();
-  
   // massPopChart.reset();
   // hourStatsChart.reset();
-  // massPopChart.update();
+  massPopChart.update();
+  hourStatsChart.update();
+  weekStatsChart.update();
   // setup();
 
-  loadJSON("https://iot.martinintw.com/api/v1/data/12345614",lastUsed);
+  loadJSON("https://iot.martinintw.com/api/v1/data/12345614",parseData);
 }
 
 /*
