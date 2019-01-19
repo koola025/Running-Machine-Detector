@@ -1,39 +1,210 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 
-</html>
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <title>Running Machine</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap 
+  <link href="css/mdb.min.css" rel="stylesheet">
+  Your custom styles (optional) 
+  <link href="css/style.min.css" rel="stylesheet"> -->
 
-    <title>Running Machine</title>
+  <!-- Material Design Bootstrap -->
+  <link href="css/mdb.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="css/style.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/locale/zh-tw.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
-    <!-- <script src="http://www.chartjs.org/dist/2.6.0/Chart.bundle.js"></script> -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/locale/zh-tw.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 
 </head>
 
-<body class="bg-light">
+<body onload=SetLastUpdateTime()  class="grey lighten-3">
 
-    <h1>Running Machine</h1>
+  <!--Main Navigation-->
+  <header>
 
-    <!-- 放圖表的地方 -->
-    <div class = "container">
-        <canvas id = "chart"></canvas>
-        <canvas id = "hour"></canvas>
+    <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+      <div class="container-fluid">
+
+        <!-- Title -->
+        <a class="navbar-brand waves-effect" href="#">
+          <strong class="blue-text">重訓室器材使用分析</strong>
+        </a>
+
+        <!-- Collapse -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Links -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+          <!-- Left -->
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link waves-effect" href="#">跑步機
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link waves-effect" href="#">飛輪
+            </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link waves-effect" href="#">舉重器</a>
+            </li>
+          </ul>
+
+        </div>
+
+      </div>
+    </nav>
+    <!-- Navbar -->
+
+    <!-- Sidebar -->
+    <div class="sidebar-fixed position-fixed">
+
+      <a class="logo-wrapper waves-effect">
+        <img src="img/gym_running_people.png" class="img-fluid" alt="">
+      </a>
+
+      <div class="list-group list-group-flush">
+        <a href="#chartGrid" class="list-group-item list-group-item-action waves-effect">
+          <i class="fas fa-chart-pie mr-3"></i>每日使用量</a>
+        <a href="#hourGrid" class="list-group-item list-group-item-action waves-effect">
+          <i class="fas fa-user mr-3"></i>尖峰時段預測</a>
+        <a href="#weekGrid" class="list-group-item list-group-item-action waves-effect">
+          <i class="fas fa-table mr-3"></i>星期使用狀況</a>
+        <a href="#latesthourGrid" class="list-group-item list-group-item-action waves-effect">
+          <i class="fas fa-map mr-3"></i>最近一小時使用狀況</a>
+
+      </div>
+
     </div>
-    
-    
-    <script src="backend.js"></script>
+    <!-- Sidebar -->
+
+  </header>
+  <!--Main Navigation-->
+
+  <!--Main layout-->
+  <main class="pt-5 mx-lg-5">      
+
+    <div class="container-fluid mt-5">
+
+        <button onclick=resetChart()>更新</button>
+        <p>上次更新時間 <span id="lastUpdateTime">0000</span></p>
+
+      <!--Grid row-->
+      <div class="row fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-12 pt-5" id="chartGrid">
+          <!--Card-->
+          <div class="card">
+            <!-- Card header -->
+            <div class="card-header text-center">
+              每日使用量
+            </div>
+            <!--Card content-->
+            <div class="card-body">
+              <canvas id="chart"></canvas>
+            </div>
+          </div>
+          <!--/.Card-->
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-12 pt-5" id="hourGrid">
+            <!--Card-->
+            <div class="card hour">
+              <!-- Card header -->
+              <div class="card-header text-center">
+                尖峰時段預測
+              </div>
+              <!--Card content-->
+              <div class="card-body">
+                <canvas id="hour"></canvas>
+              </div>
+            </div>
+            <!--/.Card-->
+          </div>
+          <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-12 pt-5" id="weekGrid">
+            <!--Card-->
+            <div class="card week">
+              <!-- Card header -->
+              <div class="card-header text-center">
+                星期使用狀況
+              </div>
+              <!--Card content-->
+              <div class="card-body">
+                <canvas id="week"></canvas>
+              </div>
+            </div>
+            <!--/.Card-->
+          </div>
+          <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-12 mb-3 pt-5" id="latesthourGrid">
+            <!--Card-->
+            <div class="card latesthour">
+              <!-- Card header -->
+              <div class="card-header text-center">
+                最近一小時使用狀況
+                </div>
+              <!--Card content-->
+              <div class="card-body">
+                <canvas id="latesthour"></canvas>
+              </div>
+            </div>
+            <!--/.Card-->
+          </div>
+          <!--Grid column-->
+
+
+
+      </div>
+      <!--Grid row-->
+
+    </div>
+  </main>
+  <!--Main layout-->
+
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <!-- Initializations -->
+  <script type="text/javascript">
+    // Animations initialization
+    new WOW().init();
+  </script>
+  <script src="backend.js"></script>
+
+
 </body>
 
 </html>
