@@ -41,6 +41,9 @@ function setup() {
 
 
 function resetChart(){
+
+  SetLastUpdateTime();
+
   removeData(massPopChart);
   removeData(hourStatsChart);
   removeData(weekStatsChart);
@@ -57,7 +60,25 @@ function resetChart(){
   // setup();
 
   loadJSON("https://iot.martinintw.com/api/v1/data/12345614",parseData);
+
 }
+
+
+
+
+
+
+let LastUpdateTime;
+
+function SetLastUpdateTime(){
+  LastUpdateTime = new Date();
+  console.log(LastUpdateTime);
+  var str = LastUpdateTime.toString().split(" ")[4];
+
+  document.getElementById("lastUpdateTime").innerHTML = str;
+
+}
+
 
 /*
  * 計算上一筆資料跟現在距離幾毫秒 * * * * * * * * * * * * * * *
@@ -71,6 +92,9 @@ function lastUsed(data){
   console.log(now.valueOf() - last.valueOf());
   if(now.valueOf() - last.valueOf() < 600000) console.log("10分鐘內有人用過");
   else console.log("10分鐘內沒人用過");
+
+
+
 }
 
 
@@ -137,6 +161,8 @@ function latestHourStas(data)
 		console.log("最近一小時無人使用");
 		addData(latestHourStatsChart,"最近一小時無人使用",1);
 	}
+	
+	console.log(new Date("2019-01-17 18:00:00").valueOf()); //1547719200000
 	
 	 
 	
@@ -247,7 +273,6 @@ function parseData(data){
   
 }
 
-
 /*
  * Parse created_at * * * * * * * * * * * * * * * * * * *
  */
@@ -268,9 +293,15 @@ function addData(chart, label, data) {
   chart.data.labels.push(label);
   chart.data.datasets.forEach((dataset) => {
       dataset.data.push(data);
-
-      dataset.backgroundColor= window.chartColors.lightBlue;
-      dataset.borderColor = window.chartColors.blue;
+	  if(chart == latestHourStatsChart && label != "最近一小時無人使用")
+	  {
+		dataset.backgroundColor= window.chartColors.red;
+		dataset.borderColor = window.chartColors.darkRed;
+	  }
+	  else{
+		dataset.backgroundColor= window.chartColors.lightBlue;
+		dataset.borderColor = window.chartColors.blue;
+	  }
   });
   chart.update();
 }
@@ -299,7 +330,8 @@ window.chartColors = {
   blue: 'rgb(54, 162, 235)',
   lightBlue: 'rgba(54, 162, 235, 0.6)',
 	purple: 'rgb(153, 102, 255)',
-	grey: 'rgb(201, 203, 207)'
+	grey: 'rgb(201, 203, 207)',
+	darkRed: 'rgb(255, 0, 92)'
 };
 
 // 圖表的全域變數
