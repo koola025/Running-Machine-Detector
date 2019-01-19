@@ -44,7 +44,7 @@ function resetChart(){
   removeData(massPopChart);
   removeData(hourStatsChart);
   removeData(weekStatsChart);
-
+  removeData(latestHourStatsChart);
   // massPopChart.clear();
   // hourStatsChart.clear();
   // massPopChart.reset();
@@ -52,6 +52,8 @@ function resetChart(){
   massPopChart.update();
   hourStatsChart.update();
   weekStatsChart.update();
+  latestHourStatsChart.update();
+
   // setup();
 
   loadJSON("https://iot.martinintw.com/api/v1/data/12345614",parseData);
