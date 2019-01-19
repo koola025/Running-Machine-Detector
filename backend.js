@@ -40,9 +40,43 @@ function setup() {
 
 
 
+function resetChart(){
+  removeData(massPopChart);
+  removeData(hourStatsChart);
+  removeData(weekStatsChart);
+
+  // massPopChart.clear();
+  // hourStatsChart.clear();
+  // massPopChart.reset();
+  // hourStatsChart.reset();
+  massPopChart.update();
+  hourStatsChart.update();
+  weekStatsChart.update();
+  // setup();
+
+  loadJSON("https://iot.martinintw.com/api/v1/data/12345614",parseData);
+}
+
+/*
+ * 計算上一筆資料跟現在距離幾毫秒 * * * * * * * * * * * * * * *
+ */
+
+function lastUsed(data){
+  created_at = getCreatedTime(data,data.length-1);
+  // var last = new Date("2019-01-18 22:49:37");
+  var last = new Date(created_at);
+  var now = new Date();
+  console.log(now.valueOf() - last.valueOf());
+  if(now.valueOf() - last.valueOf() < 600000) console.log("10分鐘內有人用過");
+  else console.log("10分鐘內沒人用過");
+}
+
+
+
 /*
  * 作圖：每日用量 * * * * * * * * * * * * * * * * * * * * * * 
  */
+
 let count = 1;
 let old_data;
 let new_data;
@@ -139,19 +173,24 @@ function hourStats(data){
 			count[8] ++;
 		else if(hour[i] == "09")
       count[9] ++;
-    else count[hour[i]]++;
-
-		
-		
+    else count[hour[i]]++;		
   }
   
   for(i=7;i<=22;i++){
     addData(hourStatsChart,i, count[i]*100/data.length);
-  }
-  
-	
-  
+  } 
 }
+
+function removeData(chart) {
+  var i;
+  for(i=0;i<chart.data.labels.length;)
+  chart.data.labels.pop();
+  chart.data.datasets.forEach((dataset) => {
+      dataset.data.pop();
+  });
+  chart.update();
+}
+
 
 
 function weekStats(data){
@@ -183,13 +222,13 @@ function weekStats(data){
 
 
 
+
 /*
  * Parse JSON * * * * * * * * * * * * * * * * * * * * * * 
  */
 function parseData(data){
   // console.log(data)
   makeUsagePerDay(data);
-
   for(i = 0; i < data.length; i++)
 	{
     created_at = getCreatedTime(data,i);
@@ -247,6 +286,7 @@ let hourChart = document.getElementById('hour').getContext('2d');
 let usagePerDay = document.getElementById('chart').getContext('2d');
 let weekChart = document.getElementById('week').getContext('2d');
 let latestHourChart = document.getElementById('latesthour').getContext('2d');
+
 
 // 定義顏色
 window.chartColors = {
