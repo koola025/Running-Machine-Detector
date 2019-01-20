@@ -128,8 +128,6 @@ let count = 1;
 let old_data;
 let new_data;
 function makeUsagePerDay(data) {
-  console.log("make");
-  console.log (data);
   if (data.length > 0) new_data = getCreatedTime(data, 0);
 	for(i = 1; i < data.length; i++)
 	{
@@ -151,13 +149,11 @@ function makeUsagePerDay(data) {
 
     if (old_day == new_day && old_month == new_month && old_year == new_year) {
       count++;
-      console.log("no add");
     }
     else {
       old_js_time.setHours(0,0,0,0);
       addData(massPopChart, old_js_time, count);
       count = 1;
-      console.log("add");
     }
   }
 
@@ -167,15 +163,16 @@ function latestHourStas(data)
 {
 	var count = 0;
 	now = new Date().valueOf();
-	console.log(now);
+	console.log("now: " +now);
 	for(i = 0; i < data.length; i++)
 	{
 		
 		//console.log(new Date(data[i].created_at).valueOf());
-		temp = new Date(data[i].created_at).valueOf();
+    temp = new Date(data[i].created_at).valueOf();
+    console.log("ca: "+data[i].created_at);
 		difference = now - temp;
 		//console.log(temp);
-		if(difference <= 3600000){
+		if(difference <= 3600000 && now > temp){
 			console.log("在一小時以內");
 			addData(latestHourStatsChart,data[i].created_at,1);
 		}
@@ -287,7 +284,7 @@ function parseData(data){
   for(i = 0; i < data.length; i++)
 	{
     created_at = getCreatedTime(data,i);
-    // console.log(created_at);
+    console.log(created_at);
     day[i] = created_at.split(" ")[0];
     time[i] = created_at.split(" ")[1];
 	  week[i] = new Date(created_at).getDay();
