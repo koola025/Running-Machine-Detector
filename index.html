@@ -84,14 +84,15 @@
       </a>
 
       <div class="list-group list-group-flush">
+        <a href="#latesthourGrid" class="list-group-item list-group-item-action waves-effect">
+            <i class="fas fa-map mr-3"></i>最近一小時使用狀況</a>
         <a href="#chartGrid" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-chart-pie mr-3"></i>每日使用量</a>
         <a href="#hourGrid" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-user mr-3"></i>尖峰時段預測</a>
         <a href="#weekGrid" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-table mr-3"></i>星期使用狀況</a>
-        <a href="#latesthourGrid" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-map mr-3"></i>最近一小時使用狀況</a>
+        
 
       </div>
 
@@ -108,6 +109,23 @@
 
         <button type="button" class="btn btn-info" onclick=resetChart(0)>更新</button>
         <p class="mt-2">上次更新時間 <span id="lastUpdateTime">0000</span></p>
+    
+        <!--Grid column-->
+        <div class="col-12 mb-3 pt-5" id="latesthourGrid">
+                <!--Card-->
+                <div class="card latesthour">
+                  <!-- Card header -->
+                  <div class="card-header text-center">
+                      <h5 class="pt-2">最近一小時使用狀況</h5>
+                    </div>
+                  <!--Card content-->
+                  <div class="card-body">
+                    <canvas id="latesthour"></canvas>
+                  </div>
+                </div>
+                <!--/.Card-->
+              </div>
+              <!--Grid column-->
 
       <!--Grid row-->
       <div class="row fadeIn">
@@ -163,22 +181,7 @@
           </div>
           <!--Grid column-->
 
-        <!--Grid column-->
-        <div class="col-12 mb-3 pt-5" id="latesthourGrid">
-            <!--Card-->
-            <div class="card latesthour">
-              <!-- Card header -->
-              <div class="card-header text-center">
-                  <h5 class="pt-2">最近一小時使用狀況</h5>
-                </div>
-              <!--Card content-->
-              <div class="card-body">
-                <canvas id="latesthour"></canvas>
-              </div>
-            </div>
-            <!--/.Card-->
-          </div>
-          <!--Grid column-->
+        
 
 
 

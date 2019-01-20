@@ -363,7 +363,7 @@ let massPopChart = new Chart(usagePerDay, {
   data:{
     labels: [],
     datasets:[{
-      label:'Count',
+      label:'次數',
       fill: false,
 
       // steppedLine: true,
