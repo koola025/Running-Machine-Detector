@@ -56,7 +56,7 @@ function resetChart(i){
   hourStatsChart.update();
   weekStatsChart.update();
   latestHourStatsChart.update();
-
+  console.log("update done");
   // setup();
   if(i!=0) currentMachine = i;
   document.getElementById("li1").classList.remove("active");
@@ -128,6 +128,8 @@ let count = 1;
 let old_data;
 let new_data;
 function makeUsagePerDay(data) {
+  console.log("make");
+  console.log (data);
   if (data.length > 0) new_data = getCreatedTime(data, 0);
 	for(i = 1; i < data.length; i++)
 	{
@@ -149,12 +151,16 @@ function makeUsagePerDay(data) {
 
     if (old_day == new_day && old_month == new_month && old_year == new_year) {
       count++;
+      console.log("no add");
     }
     else {
+      old_js_time.setHours(0,0,0,0);
       addData(massPopChart, old_js_time, count);
       count = 1;
+      console.log("add");
     }
   }
+
 }
 
 function latestHourStas(data)
@@ -230,11 +236,13 @@ function hourStats(data){
 
 function removeData(chart) {
   var i;
-  for(i=0;i<chart.data.labels.length;)
-  chart.data.labels.pop();
-  chart.data.datasets.forEach((dataset) => {
-      dataset.data.pop();
-  });
+  while(chart.data.labels.length > 0) {
+    chart.data.labels.pop();
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.pop();
+    });
+  }
+  
   chart.update();
 }
 
@@ -274,11 +282,12 @@ function weekStats(data){
  * Parse JSON * * * * * * * * * * * * * * * * * * * * * * 
  */
 function parseData(data){
-  // console.log(data)
+  console.log(data)
   makeUsagePerDay(data);
   for(i = 0; i < data.length; i++)
 	{
     created_at = getCreatedTime(data,i);
+    // console.log(created_at);
     day[i] = created_at.split(" ")[0];
     time[i] = created_at.split(" ")[1];
 	  week[i] = new Date(created_at).getDay();
@@ -350,31 +359,30 @@ Chart.defaults.global.defaultFontColor = '#777';
 
 // 圖表Object: 每天用量
 let massPopChart = new Chart(usagePerDay, {
-  type:'line', //換後面這些就會出現不同的圖： bar, horizontalBar, pie, line, doughnut, radar, polarArea
+  type:'bar', //換後面這些就會出現不同的圖： bar, horizontalBar, pie, line, doughnut, radar, polarArea
   data:{
     labels: [],
     datasets:[{
       label:'Count',
-      // fill: false,
-     // pointBackgroundColor: window.chartColors.blue,
-      //backgroundColor: window.chartColors.yellow,
-      //borderColor: window.chartColors.blue,
+      fill: false,
+
       // steppedLine: true,
+      spanGaps: true,
       data:[
         
       ],
-      // backgroundColor:'rgba(255, 99, 132, 0.6)',      // 可自訂背景顏色
       backgroundColor:'rgba(255, 99, 132, 0.2)',
-      
       borderColor:'rgba(255,99,132,1)',
-      
       borderWidth:1,
-      borderColor:[],
+
       hoverBorderWidth:3,
-      hoverBorderColor:'#000'
+      hoverBorderColor:'#000',
+      
+      // showLine: false
     }]
   },
-  fill: false,
+  spanGaps: true,
+  // fill: true,
   options:{
     title:{
       display:false,
